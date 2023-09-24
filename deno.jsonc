@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "dev": "deno run -A --node-modules-dir npm:vite dev",
+    "build": "deno run -A --node-modules-dir npm:vite build"
+  }
+}
