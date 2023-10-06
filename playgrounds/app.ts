@@ -1,7 +1,7 @@
 /// <reference lib="dom" />
 import { render, renderToString } from "../src/index.ts";
 import { Node } from "../src/asa.ts";
-import { createSignal, Signal } from "../src/signals.ts";
+import { createMemo, createSignal, Signal } from "../src/signals.ts";
 import styles from "./index.module.css";
 
 const Button = (
@@ -17,6 +17,24 @@ const Button = (
       "class": buttonStyles,
     },
     children: [`button ${count.state}`],
+  };
+};
+
+const ButtonWithState = (): Node => {
+  const count = createSignal(0);
+  const buttonStyles = createMemo(() => {
+    return styles["button"] + " " +
+      (count.state % 2 ? styles["-teal"] : styles["-blue"]);
+  }, [count]);
+  const onClick = () => count.setState((current) => current + 1);
+
+  return {
+    type: "button",
+    attributes: {
+      "on:click": onClick,
+      "class": buttonStyles,
+    },
+    children: [createMemo(() => `button ${count.state}`, [count])],
   };
 };
 
@@ -38,6 +56,10 @@ const App = (): Node => {
         component: Button,
       },
       { props: { count }, component: Counter },
+      {
+        props: {},
+        component: ButtonWithState,
+      },
     ],
   };
 };

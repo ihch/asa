@@ -86,6 +86,13 @@ export function render(
       element.addEventListener(k.split("on:")[1], v);
       return;
     }
+    if (v instanceof Signal) {
+      element.setAttribute(k, v.state);
+      createEffect(() => {
+        element.setAttribute(k, v.state);
+      }, [v]);
+      return;
+    }
     element.setAttribute(k, v);
   });
 
