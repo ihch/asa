@@ -2,14 +2,19 @@
 import { render, renderToString } from "../src/index.ts";
 import { Node } from "../src/asa.ts";
 import { createSignal, Signal } from "../src/signals.ts";
+import styles from "./index.module.css";
 
 const Button = (
   { count, onClick }: { count: Signal<number>; onClick: () => void },
 ): Node => {
+  const buttonStyles = styles["button"] + " " +
+    (count.state % 2 ? styles["-teal"] : styles["-blue"]);
+
   return {
     type: "button",
     attributes: {
       "on:click": onClick,
+      "class": buttonStyles,
     },
     children: [`button ${count.state}`],
   };

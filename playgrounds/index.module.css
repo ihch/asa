@@ -1,0 +1,13 @@
+.container {
+  background-color: teal;
+}
+
+.button {
+  &.-teal {
+    background-color: teal;
+  }
+
+  &.-blue {
+    background-color: blue;
+  }
+}
